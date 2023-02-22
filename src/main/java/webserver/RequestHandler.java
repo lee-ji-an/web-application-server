@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.util.Collection;
 
+import controller.Controller;
 import db.DataBase;
 import http.HttpRequest;
 import http.HttpResponse;
@@ -29,52 +30,16 @@ public class RequestHandler extends Thread {
             HttpRequest httpRequest = new HttpRequest(in);
             HttpResponse httpResponse = new HttpResponse(out);
 
-            switch (httpRequest.getPath()) {
-                case "/user/create": {
-                    User user = new User(httpRequest.getParameter("userId"), httpRequest.getParameter("password"), httpRequest.getParameter("name"), httpRequest.getParameter("email"));
-                    DataBase.addUser(user);
-                    httpResponse.sendRedirect("/index.html");
-                    break;
-                }
-                case "/user/login": {
-                    String userId = httpRequest.getParameter("userId");
-                    User user = DataBase.findUserById(userId);
-
-                    if ((user != null) && (user.getPassword().equals(httpRequest.getParameter("password")))) {
-                        httpResponse.addHeader("Set-Cookie", "logined=true");
-                        httpResponse.sendRedirect("/index.html");
-                    } else {
-                        httpResponse.sendRedirect("/user/login_failed.html");
-                    }
-                    break;
-                }
-                case "/user/list" : {
-                    String cookie = httpRequest.getHeader("Cookie");
-                    if (cookie.contains("logined=true")) {
-                        System.out.println("true");
-                        StringBuilder sb = new StringBuilder();
-                        Collection<User> userList = DataBase.findAll();
-                        for (User user : userList) {
-                            sb.append(user).append("\n\r");
-                            sb.append("\n\r");
-                        }
-
-                        byte[] body = sb.toString().getBytes();
-                        OutputStream outFile = Files.newOutputStream(new File("./webapp/user/list.html").toPath());
-                        outFile.write(body);
-                        httpResponse.forward("/user/list.html");
-                        break;
-                    }
-                    httpResponse.sendRedirect("/user/login.html");
-                    break;
-                }
-                default: {
-                    httpResponse.forward(httpRequest.getPath());
-                    break;
-                }
+            Controller controller = RequestMapping.getController(httpRequest.getPath());
+            if (controller == null) {
+                httpResponse.forward(httpRequest.getPath());
+            } else {
+                controller.service(httpRequest, httpResponse);
             }
+
         } catch (IOException e) {
             log.error(e.getMessage());
         }
     }
+
 }
