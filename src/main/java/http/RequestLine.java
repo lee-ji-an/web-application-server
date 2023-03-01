@@ -10,14 +10,14 @@ import java.util.Map;
 public class RequestLine {
     private static final Logger log = LoggerFactory.getLogger(RequestLine.class);
 
-    private String method;
+    private HttpMethod method;
     private String path;
     Map<String, String> params = new HashMap<>();
 
     public RequestLine(String requestLine) {
         log.debug("Request Line: {}", requestLine);
         String[] tokens = requestLine.split(" ");
-        method = tokens[0];
+        method = HttpMethod.valueOf(tokens[0]);
 
         int queryIdx = tokens[1].indexOf("?");
         if (queryIdx == -1) {   // url 에 param 이 없으면
@@ -29,7 +29,7 @@ public class RequestLine {
         log.debug("path: {}", path);
     }
 
-    public String getMethod() {
+    public HttpMethod getMethod() {
         return method;
     }
 

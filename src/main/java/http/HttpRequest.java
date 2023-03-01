@@ -39,7 +39,7 @@ public class HttpRequest {
             log.debug("HeaderMap: {}", headerMap);
 
             queryMap = requestLine.getParams();
-            if ("POST".equals(getMethod())) {
+            if (getMethod().isPost()) {
                 String content = IOUtils.readData(br, Integer.parseInt(headerMap.get("Content-Length")));
                 Map<String, String> bodyQueryMap = HttpRequestUtils.parseQueryString(content);
                 bodyQueryMap.forEach((key, value) -> queryMap.merge(key, value, (v1, v2) -> v2));
@@ -53,7 +53,7 @@ public class HttpRequest {
         }
     }
 
-    public String getMethod() {
+    public HttpMethod getMethod() {
         return requestLine.getMethod();
     }
 
