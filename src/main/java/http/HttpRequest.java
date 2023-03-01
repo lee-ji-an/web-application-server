@@ -13,14 +13,11 @@ import java.util.Map;
 public class HttpRequest {
     private static final Logger log = LoggerFactory.getLogger(HttpRequest.class);
 
-    String method;
-    String path;
-    Map<String, String> queryMap;
-    Map<String, String> headerMap;
+    Map<String, String> queryMap = new HashMap<>();
+    Map<String, String> headerMap = new HashMap<>();
+    RequestLine requestLine;
 
     public HttpRequest(InputStream in){
-        queryMap = new HashMap<>();
-        headerMap = new HashMap<>();
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             String line = br.readLine();
@@ -28,7 +25,7 @@ public class HttpRequest {
                 return;
             }
 
-            processRequestLine(line);
+            requestLine = new RequestLine(line);
 
             while (!line.equals("")) {
                 line = br.readLine();
@@ -41,41 +38,27 @@ public class HttpRequest {
             }
             log.debug("HeaderMap: {}", headerMap);
 
-            if (method.equals("POST")) {
+            queryMap = requestLine.getParams();
+            if ("POST".equals(getMethod())) {
                 String content = IOUtils.readData(br, Integer.parseInt(headerMap.get("Content-Length")));
                 Map<String, String> bodyQueryMap = HttpRequestUtils.parseQueryString(content);
-                log.debug("body Query Map : {}", bodyQueryMap);
                 bodyQueryMap.forEach((key, value) -> queryMap.merge(key, value, (v1, v2) -> v2));
+
+                log.debug("body Query Map : {}", bodyQueryMap);
             }
+
             log.debug("queryMap: {}", queryMap);
         } catch (IOException e) {
             log.error(e.getMessage());
         }
     }
 
-    private void processRequestLine(String requestLine) {
-        log.debug("Request Line: {}", requestLine);
-        String[] tokens = requestLine.split(" ");
-        method = tokens[0];
-
-        int queryIdx = tokens[1].indexOf("?");
-        if (queryIdx == -1) {   // url 에 param 이 없으면
-            path = tokens[1];
-        } else {
-            path = tokens[1].substring(0, queryIdx);
-            queryMap = HttpRequestUtils.parseQueryString(tokens[1].substring(queryIdx + 1));
-        }
-        log.debug("path: {}", path);
-
-        headerMap = new HashMap<>();
-    }
-
     public String getMethod() {
-        return method;
+        return requestLine.getMethod();
     }
 
     public String getPath() {
-        return path;
+        return requestLine.getPath();
     }
 
     public String getHeader(String key) {
