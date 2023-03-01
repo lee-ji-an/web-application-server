@@ -24,20 +24,12 @@ public class HttpRequest {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             String line = br.readLine();
-            log.debug("Request Line: {}", line);
-            String[] tokens = line.split(" ");
-
-            method = tokens[0];
-            int queryIdx = tokens[1].indexOf("?");
-            if (queryIdx != -1) {
-                path = tokens[1].substring(0, tokens[1].indexOf("?"));
-                queryMap = HttpRequestUtils.parseQueryString(tokens[1].substring(tokens[1].indexOf("?") + 1));
-            } else {
-                path = tokens[1];
+            if (line == null) {
+                return;
             }
-            log.debug("path: {}", path);
 
-            headerMap = new HashMap<>();
+            processRequestLine(line);
+
             while (!line.equals("")) {
                 line = br.readLine();
                 log.debug("Header: {}", line);
@@ -59,6 +51,23 @@ public class HttpRequest {
         } catch (IOException e) {
             log.error(e.getMessage());
         }
+    }
+
+    private void processRequestLine(String requestLine) {
+        log.debug("Request Line: {}", requestLine);
+        String[] tokens = requestLine.split(" ");
+        method = tokens[0];
+
+        int queryIdx = tokens[1].indexOf("?");
+        if (queryIdx == -1) {   // url 에 param 이 없으면
+            path = tokens[1];
+        } else {
+            path = tokens[1].substring(0, queryIdx);
+            queryMap = HttpRequestUtils.parseQueryString(tokens[1].substring(queryIdx + 1));
+        }
+        log.debug("path: {}", path);
+
+        headerMap = new HashMap<>();
     }
 
     public String getMethod() {
