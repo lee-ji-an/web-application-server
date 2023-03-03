@@ -68,4 +68,12 @@ public class HttpRequest {
     public String getParameter(String key) {
         return queryMap.get(key);
     }
+
+    public HttpSession getSession() {
+        return HttpSessions.getSession(getCookies().getCookie("JSESSIONID"));
+    }
+
+    public HttpCookie getCookies() {
+        return new HttpCookie(getHeader("Cookie"));
+    }
 }

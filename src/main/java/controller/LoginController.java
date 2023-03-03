@@ -3,6 +3,8 @@ package controller;
 import db.DataBase;
 import http.HttpRequest;
 import http.HttpResponse;
+import http.HttpSession;
+import http.HttpSessions;
 import model.User;
 
 public class LoginController extends AbstractController {
@@ -13,7 +15,8 @@ public class LoginController extends AbstractController {
         User user = DataBase.findUserById(userId);
 
         if ((user != null) && (user.getPassword().equals(httpRequest.getParameter("password")))) {
-            httpResponse.addHeader("Set-Cookie", "logined=true");
+            HttpSession session = httpRequest.getSession();
+            session.setAttribute("user", user);
             httpResponse.sendRedirect("/index.html");
         } else {
             httpResponse.sendRedirect("/user/login_failed.html");
