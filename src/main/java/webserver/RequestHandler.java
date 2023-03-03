@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import controller.Controller;
 import db.DataBase;
+import http.HttpCookie;
 import http.HttpRequest;
 import http.HttpResponse;
 import model.User;
@@ -33,7 +34,7 @@ public class RequestHandler extends Thread {
             HttpRequest httpRequest = new HttpRequest(in);
             HttpResponse httpResponse = new HttpResponse(out);
 
-            if (getSessionId(httpRequest.getHeader("Cookie")) == null) {
+            if (httpRequest.getCookies().getCookie("JSESSIONID") == null) {
                 httpResponse.addHeader("Set-Cookie", "JSESSIONID=" + UUID.randomUUID());
             }
 
@@ -48,12 +49,4 @@ public class RequestHandler extends Thread {
             log.error(e.getMessage());
         }
     }
-
-    private String getSessionId(String cookie) {
-        Map<String, String> cookies = HttpRequestUtils.parseCookies(cookie);
-        log.debug("JSESSIONID: {}", cookies.get("JSESSIONID"));
-
-        return cookies.get("JSESSIONID");
-    }
-
 }
