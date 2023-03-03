@@ -23,9 +23,11 @@ public class HttpResponse {
 
     public void forward(String url) {
         try {
-            log.debug("foward: {}", url);
+            log.debug("forward: {}", url);
+
             byte[] body = Files.readAllBytes(new File("./webapp" + url).toPath());
             String fileExtension = url.substring(url.lastIndexOf(".") + 1);
+
             response200Header(body.length, fileExtension);
             responseBody(body);
         } catch (IOException e) {

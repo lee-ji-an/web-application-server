@@ -18,11 +18,6 @@ public class ListUserController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
 
     @Override
-    public void doPost(HttpRequest httpRequest, HttpResponse httpResponse) {
-
-    }
-
-    @Override
     public void doGet(HttpRequest httpRequest, HttpResponse httpResponse) {
         try {
             String cookie = httpRequest.getHeader("Cookie");
