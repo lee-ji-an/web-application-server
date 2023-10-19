@@ -1,4 +1,4 @@
-package webserver;
+package core.webserver;
 
 import java.net.ServerSocket;
 import java.net.Socket;

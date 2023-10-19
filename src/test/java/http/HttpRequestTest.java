@@ -3,10 +3,11 @@ package http;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
 
+import core.http.request.HttpMethod;
+import core.http.request.HttpRequest;
 import org.junit.Test;
 
 public class HttpRequestTest {

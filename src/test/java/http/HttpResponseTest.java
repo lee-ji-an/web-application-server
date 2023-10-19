@@ -3,6 +3,7 @@ package http;
 import java.io.*;
 import java.nio.file.Files;
 
+import core.http.response.HttpResponse;
 import org.junit.Test;
 
 public class HttpResponseTest {

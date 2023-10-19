@@ -1,11 +1,11 @@
-package controller;
+package next.controller;
 
-import db.DataBase;
-import http.HttpRequest;
-import http.HttpResponse;
-import http.HttpSession;
-import http.HttpSessions;
-import model.User;
+import core.servlet.AbstractController;
+import next.db.DataBase;
+import core.http.request.HttpRequest;
+import core.http.response.HttpResponse;
+import core.http.HttpSession;
+import next.model.User;
 
 public class LoginController extends AbstractController {
 
