@@ -1,7 +1,7 @@
-package core.servlet;
+package controller;
 
-import core.http.request.HttpRequest;
-import core.http.response.HttpResponse;
+import http.HttpRequest;
+import http.HttpResponse;
 
 public interface Controller {
     void service(HttpRequest httpRequest, HttpResponse httpResponse);
