@@ -1,14 +1,14 @@
-package next.controller;
+package mvc.controller;
 
-import core.servlet.AbstractController;
-import next.db.DataBase;
-import core.http.request.HttpRequest;
-import core.http.response.HttpResponse;
-import core.http.HttpSession;
-import next.model.User;
+import container.servlet.AbstractController;
+import mvc.db.DataBase;
+import container.http.request.HttpRequest;
+import container.http.response.HttpResponse;
+import container.http.HttpSession;
+import mvc.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import core.webserver.RequestHandler;
+import container.webserver.RequestHandler;
 
 import java.io.File;
 import java.io.IOException;

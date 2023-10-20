@@ -1,8 +1,7 @@
-package core.http;
+package container.http;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class HttpSession {
     private Map<String, Object> session = new HashMap<>();

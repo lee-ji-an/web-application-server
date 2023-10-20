@@ -6,8 +6,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 
-import core.http.request.HttpMethod;
-import core.http.request.HttpRequest;
+import container.http.request.HttpMethod;
+import container.http.request.HttpRequest;
 import org.junit.Test;
 
 public class HttpRequestTest {

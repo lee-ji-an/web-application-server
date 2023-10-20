@@ -1,4 +1,4 @@
-package next.model;
+package mvc.model;
 
 public class User {
     private String userId;

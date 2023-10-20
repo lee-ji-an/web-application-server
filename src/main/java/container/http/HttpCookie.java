@@ -1,6 +1,6 @@
-package core.http;
+package container.http;
 
-import core.util.HttpRequestUtils;
+import container.util.HttpRequestUtils;
 
 import java.util.Map;
 

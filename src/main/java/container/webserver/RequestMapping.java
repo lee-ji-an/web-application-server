@@ -1,9 +1,9 @@
-package core.webserver;
+package container.webserver;
 
-import core.servlet.Controller;
-import next.controller.CreateUserController;
-import next.controller.ListUserController;
-import next.controller.LoginController;
+import container.servlet.Controller;
+import mvc.controller.CreateUserController;
+import mvc.controller.ListUserController;
+import mvc.controller.LoginController;
 
 import java.util.HashMap;
 import java.util.Map;

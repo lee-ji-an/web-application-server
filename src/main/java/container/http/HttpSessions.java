@@ -1,6 +1,6 @@
-package core.http;
+package container.http;
 
-import core.http.request.HttpRequest;
+import container.http.request.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

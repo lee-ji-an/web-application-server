@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 
 import java.util.Map;
 
-import core.util.HttpRequestUtils;
+import container.util.HttpRequestUtils;
 import org.junit.Test;
 
-import core.util.HttpRequestUtils.Pair;
+import container.util.HttpRequestUtils.Pair;
 
 public class HttpRequestUtilsTest {
     @Test

@@ -1,8 +1,8 @@
-package core.http.request;
+package container.http.request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import core.util.HttpRequestUtils;
+import container.util.HttpRequestUtils;
 
 import java.util.HashMap;
 import java.util.Map;

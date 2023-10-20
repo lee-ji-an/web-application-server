@@ -1,12 +1,12 @@
-package core.webserver;
+package container.webserver;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
 
-import core.servlet.Controller;
-import core.http.request.HttpRequest;
-import core.http.response.HttpResponse;
+import container.servlet.Controller;
+import container.http.request.HttpRequest;
+import container.http.response.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
