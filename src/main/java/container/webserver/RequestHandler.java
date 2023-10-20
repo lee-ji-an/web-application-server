@@ -31,10 +31,10 @@ public class RequestHandler extends Thread {
                 httpResponse.addHeader("Set-Cookie", "JSESSIONID=" + UUID.randomUUID());
             }
 
-            Servlet controller = RequestMapping.getController(httpRequest.getPath());
-            if (controller == null) {
+            if (httpRequest.getPath().contains(".")) {
                 httpResponse.forward(httpRequest.getPath());
             } else {
+                Servlet controller = RequestMapping.getController(httpRequest.getPath().substring(0, 1));
                 controller.service(httpRequest, httpResponse);
             }
 
