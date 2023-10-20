@@ -4,7 +4,7 @@ import container.http.request.HttpMethod;
 import container.http.request.HttpRequest;
 import container.http.response.HttpResponse;
 
-public abstract class AbstractController implements Controller {
+public abstract class AbstractServlet implements Servlet {
     @Override
     public void service(HttpRequest httpRequest, HttpResponse httpResponse) {
         HttpMethod method = httpRequest.getMethod();

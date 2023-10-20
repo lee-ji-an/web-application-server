@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
 
-import container.servlet.Controller;
+import container.servlet.Servlet;
 import container.http.request.HttpRequest;
 import container.http.response.HttpResponse;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class RequestHandler extends Thread {
                 httpResponse.addHeader("Set-Cookie", "JSESSIONID=" + UUID.randomUUID());
             }
 
-            Controller controller = RequestMapping.getController(httpRequest.getPath());
+            Servlet controller = RequestMapping.getController(httpRequest.getPath());
             if (controller == null) {
                 httpResponse.forward(httpRequest.getPath());
             } else {
