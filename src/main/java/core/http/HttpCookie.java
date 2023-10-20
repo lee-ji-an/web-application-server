@@ -1,13 +1,13 @@
-package http;
+package core.http;
 
-import util.HttpRequestUtils;
+import core.util.HttpRequestUtils;
 
 import java.util.Map;
 
 public class HttpCookie {
     private Map<String, String> cookies;
 
-    HttpCookie(String cookieValue) {
+    public HttpCookie(String cookieValue) {
         cookies = HttpRequestUtils.parseCookies(cookieValue);
     }
 

@@ -1,8 +1,8 @@
-package controller;
+package core.servlet;
 
-import http.HttpMethod;
-import http.HttpRequest;
-import http.HttpResponse;
+import core.http.request.HttpMethod;
+import core.http.request.HttpRequest;
+import core.http.response.HttpResponse;
 
 public abstract class AbstractController implements Controller {
     @Override

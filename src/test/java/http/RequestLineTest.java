@@ -2,6 +2,8 @@ package http;
 
 import static org.junit.Assert.*;
 
+import core.http.request.HttpMethod;
+import core.http.request.RequestLine;
 import org.junit.Test;
 
 import java.util.Map;

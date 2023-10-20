@@ -1,9 +1,12 @@
-package http;
+package core.http.request;
 
+import core.http.HttpCookie;
+import core.http.HttpSession;
+import core.http.HttpSessions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.HttpRequestUtils;
-import util.IOUtils;
+import core.util.HttpRequestUtils;
+import core.util.IOUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
