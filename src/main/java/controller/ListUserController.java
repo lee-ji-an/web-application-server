@@ -1,14 +1,13 @@
-package next.controller;
+package controller;
 
-import core.servlet.AbstractController;
-import next.db.DataBase;
-import core.http.request.HttpRequest;
-import core.http.response.HttpResponse;
-import core.http.HttpSession;
-import next.model.User;
+import db.DataBase;
+import http.HttpRequest;
+import http.HttpResponse;
+import http.HttpSession;
+import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import core.webserver.RequestHandler;
+import webserver.RequestHandler;
 
 import java.io.File;
 import java.io.IOException;
