@@ -1,16 +1,17 @@
 package mvc.controller;
 
-import container.servlet.AbstractController;
+import mvc.core.Controller;
 import mvc.db.DataBase;
 import container.http.request.HttpRequest;
 import container.http.response.HttpResponse;
 import mvc.model.User;
 
-public class CreateUserController extends AbstractController {
+public class CreateUserController implements Controller {
     @Override
-    public void doPost(HttpRequest httpRequest, HttpResponse httpResponse) {
+    public String execute(HttpRequest httpRequest, HttpResponse httpResponse) {
         User user = new User(httpRequest.getParameter("userId"), httpRequest.getParameter("password"), httpRequest.getParameter("name"), httpRequest.getParameter("email"));
         DataBase.addUser(user);
-        httpResponse.sendRedirect("/index.html");
+//        httpResponse.sendRedirect("/index.html");
+        return "redirect:/index.html";
     }
 }
