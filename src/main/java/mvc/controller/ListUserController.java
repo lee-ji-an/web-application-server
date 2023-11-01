@@ -5,19 +5,21 @@ import mvc.db.DataBase;
 import container.http.request.HttpRequest;
 import container.http.response.HttpResponse;
 import container.http.HttpSession;
+import mvc.db.dao.UserDao;
 import mvc.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import container.webserver.RequestHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 public class ListUserController implements Controller {
-    private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(ListUserController.class);
 
     @Override
     public String execute(HttpRequest httpRequest, HttpResponse httpResponse) {
@@ -27,9 +29,11 @@ public class ListUserController implements Controller {
         }
 
         try {
+            UserDao userDao = new UserDao();
+
             // 사용자 리스트 반환 기능 임시 구현
             StringBuilder sb = new StringBuilder();
-            Collection<User> userList = DataBase.findAll();
+            List<User> userList = userDao.findAll();
             for (User user : userList) {
                 sb.append(user).append("\n\r");
                 sb.append("\n\r");
@@ -41,6 +45,8 @@ public class ListUserController implements Controller {
 
         } catch (IOException e) {
             log.error(e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         return "/user/list.html";
