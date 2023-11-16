@@ -19,14 +19,14 @@ public class UserDao {
             }
 
             @Override
-            protected void setValues(User user, PreparedStatement pstmt) throws SQLException {
+            protected void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, user.getUserId());
                 pstmt.setString(2, user.getPassword());
                 pstmt.setString(3, user.getName());
                 pstmt.setString(4, user.getEmail());
             }
         };
-        insertJdbcTemplate.update(user);
+        insertJdbcTemplate.update();
     }
 
     public void update(User user) throws Exception {
@@ -37,14 +37,14 @@ public class UserDao {
             }
 
             @Override
-            protected void setValues(User user, PreparedStatement pstmt) throws SQLException {
+            protected void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, user.getPassword());
                 pstmt.setString(2, user.getName());
                 pstmt.setString(3, user.getEmail());
                 pstmt.setString(4, user.getUserId());
             }
         };
-        insertJdbcTemplate.update(user);
+        insertJdbcTemplate.update();
     }
 
     public User findByUserId(String userId) throws SQLException {
