@@ -45,8 +45,6 @@ public class ListUserController implements Controller {
 
         } catch (IOException e) {
             log.error(e.getMessage());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
         return "/user/list.html";

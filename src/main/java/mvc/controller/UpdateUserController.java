@@ -17,11 +17,7 @@ public class UpdateUserController implements Controller {
     public String execute(HttpRequest req, HttpResponse resp) throws Exception {
         User user = new User(req.getParameter("userId"), req.getParameter("password"), req.getParameter("name"), req.getParameter("email"));
         UserDao userDao = new UserDao();
-        try {
-            userDao.update(user);
-        } catch (SQLException e) {
-            log.error(e.getMessage());
-        }
+        userDao.update(user);
 
         return "redirect:/index.html";
     }

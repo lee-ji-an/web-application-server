@@ -17,11 +17,7 @@ public class CreateUserController implements Controller {
     public String execute(HttpRequest httpRequest, HttpResponse httpResponse) {
         User user = new User(httpRequest.getParameter("userId"), httpRequest.getParameter("password"), httpRequest.getParameter("name"), httpRequest.getParameter("email"));
         UserDao userDao = new UserDao();
-        try {
-            userDao.insert(user);
-        } catch (SQLException e) {
-            log.error(e.getMessage());
-        }
+        userDao.insert(user);
 
         return "redirect:/index.html";
     }
