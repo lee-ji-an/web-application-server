@@ -14,17 +14,11 @@ import java.util.List;
 public abstract class SelectJdbcTemplate {
 
     public List query() {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(createQuery());
+             ResultSet rs = pstmt.executeQuery()){
 
-        try {
-            con = ConnectionManager.getConnection();
-            String sql = createQuery();
-            pstmt = con.prepareStatement(sql);
             setValues(pstmt);
-
-            rs = pstmt.executeQuery();
             List objectList = new ArrayList<>();
             while (rs.next()) {
                 objectList.add(mapRow(rs));
@@ -33,30 +27,6 @@ public abstract class SelectJdbcTemplate {
 
         } catch (SQLException e) {
             throw new DataAccessException(e);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new DataAccessException(e);
-                }
-            }
-
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    throw new DataAccessException(e);
-                }
-            }
-
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    throw new DataAccessException(e);
-                }
-            }
         }
     }
 

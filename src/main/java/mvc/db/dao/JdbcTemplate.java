@@ -10,35 +10,15 @@ import java.sql.SQLException;
 
 public abstract class JdbcTemplate {
     public void update() throws DataAccessException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
 
-        try {
-            con = ConnectionManager.getConnection();
-            String sql = createQuery();
-            pstmt = con.prepareStatement(sql);
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(createQuery())){
+
             setValues(pstmt);
-
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new DataAccessException(e);
-        } finally {
-            if (pstmt != null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                    throw new DataAccessException(e);
-                }
-            }
-
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    throw new DataAccessException(e);
-                }
-            }
         }
     }
 
