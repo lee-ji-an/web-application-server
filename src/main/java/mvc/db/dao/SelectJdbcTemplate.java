@@ -2,6 +2,7 @@ package mvc.db.dao;
 
 
 import mvc.db.config.ConnectionManager;
+import mvc.db.exception.DataAccessException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public abstract class SelectJdbcTemplate {
 
-    public List query() throws SQLException {
+    public List query() {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -30,20 +31,36 @@ public abstract class SelectJdbcTemplate {
             }
             return objectList;
 
+        } catch (SQLException e) {
+            throw new DataAccessException(e);
         } finally {
             if (rs != null) {
-                rs.close();
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new DataAccessException(e);
+                }
             }
+
             if (pstmt != null) {
-                pstmt.close();
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    throw new DataAccessException(e);
+                }
             }
+
             if (con != null) {
-                con.close();
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new DataAccessException(e);
+                }
             }
         }
     }
 
-    public Object queryForObject() throws SQLException {
+    public Object queryForObject() {
         List result = query();
         if (result.isEmpty()) {
             return null;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    public void insert(User user) throws SQLException {
+    public void insert(User user) {
         JdbcTemplate insertJdbcTemplate = new JdbcTemplate() {
             @Override
             protected String createQuery() {
@@ -29,7 +29,7 @@ public class UserDao {
         insertJdbcTemplate.update();
     }
 
-    public void update(User user) throws Exception {
+    public void update(User user) {
         JdbcTemplate insertJdbcTemplate = new JdbcTemplate() {
             @Override
             protected String createQuery() {
@@ -47,7 +47,7 @@ public class UserDao {
         insertJdbcTemplate.update();
     }
 
-    public User findByUserId(String userId) throws SQLException {
+    public User findByUserId(String userId) {
         SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
             @Override
             protected String createQuery() {
@@ -73,7 +73,7 @@ public class UserDao {
         return (User) selectJdbcTemplate.queryForObject();
     }
 
-    public List<User> findAll() throws SQLException{
+    public List<User> findAll() {
         SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
             @Override
             protected String createQuery() {
@@ -81,11 +81,11 @@ public class UserDao {
             }
 
             @Override
-            protected void setValues(PreparedStatement pstmt) throws SQLException {
+            protected void setValues(PreparedStatement pstmt) {
             }
 
             @Override
-            protected Object mapRow(ResultSet rs) throws SQLException {
+            protected Object mapRow(ResultSet rs) throws SQLException{
                 return new User(
                         rs.getString("userId"),
                         rs.getString("password"),

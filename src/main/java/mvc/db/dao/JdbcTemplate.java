@@ -1,13 +1,15 @@
 package mvc.db.dao;
 
 import mvc.db.config.ConnectionManager;
+import mvc.db.exception.DataAccessException;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class JdbcTemplate {
-    public void update() throws SQLException {
+    public void update() throws DataAccessException {
         Connection con = null;
         PreparedStatement pstmt = null;
 
@@ -18,13 +20,24 @@ public abstract class JdbcTemplate {
             setValues(pstmt);
 
             pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DataAccessException(e);
         } finally {
             if (pstmt != null) {
-                pstmt.close();
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    throw new DataAccessException(e);
+                }
             }
 
             if (con != null) {
-                con.close();
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new DataAccessException(e);
+                }
             }
         }
     }
