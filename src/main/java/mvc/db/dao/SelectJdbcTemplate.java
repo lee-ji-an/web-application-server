@@ -14,11 +14,12 @@ import java.util.List;
 public abstract class SelectJdbcTemplate {
 
     public List query() {
+        ResultSet rs = null;
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(createQuery());
-             ResultSet rs = pstmt.executeQuery()){
+             PreparedStatement pstmt = con.prepareStatement(createQuery())){
 
             setValues(pstmt);
+            rs = pstmt.executeQuery();
             List objectList = new ArrayList<>();
             while (rs.next()) {
                 objectList.add(mapRow(rs));
@@ -27,6 +28,14 @@ public abstract class SelectJdbcTemplate {
 
         } catch (SQLException e) {
             throw new DataAccessException(e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new DataAccessException(e);
+                }
+            }
         }
     }
 
