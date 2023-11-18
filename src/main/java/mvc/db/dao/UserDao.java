@@ -60,7 +60,7 @@ public class UserDao {
             }
 
             @Override
-            protected Object mapRow(ResultSet rs) throws SQLException {
+            protected User mapRow(ResultSet rs) throws SQLException {
                 return new User(
                         rs.getString("userId"),
                         rs.getString("password"),
@@ -70,7 +70,7 @@ public class UserDao {
             }
         };
 
-        return (User) selectJdbcTemplate.queryForObject();
+        return selectJdbcTemplate.queryForObject();
     }
 
     public List<User> findAll() {
@@ -85,7 +85,7 @@ public class UserDao {
             }
 
             @Override
-            protected Object mapRow(ResultSet rs) throws SQLException{
+            protected User mapRow(ResultSet rs) throws SQLException{
                 return new User(
                         rs.getString("userId"),
                         rs.getString("password"),
@@ -95,7 +95,7 @@ public class UserDao {
             }
         };
 
-        return (List<User>) selectJdbcTemplate.query();
+        return selectJdbcTemplate.query();
     }
 
 }

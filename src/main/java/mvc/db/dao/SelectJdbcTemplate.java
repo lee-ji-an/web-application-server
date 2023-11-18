@@ -13,14 +13,14 @@ import java.util.List;
 
 public abstract class SelectJdbcTemplate {
 
-    public List query() {
+    public <T> List<T> query() {
         ResultSet rs = null;
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pstmt = con.prepareStatement(createQuery())){
 
             setValues(pstmt);
             rs = pstmt.executeQuery();
-            List objectList = new ArrayList<>();
+            List<T> objectList = new ArrayList<>();
             while (rs.next()) {
                 objectList.add(mapRow(rs));
             }
@@ -39,8 +39,8 @@ public abstract class SelectJdbcTemplate {
         }
     }
 
-    public Object queryForObject() {
-        List result = query();
+    public <T> T queryForObject() {
+        List<T> result = query();
         if (result.isEmpty()) {
             return null;
         }
@@ -51,5 +51,5 @@ public abstract class SelectJdbcTemplate {
 
     abstract protected void setValues(PreparedStatement pstmt) throws SQLException;
 
-    abstract protected Object mapRow(ResultSet rs) throws SQLException;
+    abstract protected <T> T mapRow(ResultSet rs) throws SQLException;
 }
