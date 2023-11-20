@@ -1,9 +1,7 @@
-package util;
+package container.util;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
-
-import container.util.IOUtils;
 
 import org.junit.Test;
 import org.slf4j.Logger;
